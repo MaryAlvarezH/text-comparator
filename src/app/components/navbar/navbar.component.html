@@ -1,1 +1,17 @@
-<p>navbar works!</p>
+<div class="nav">
+  <div class="nav-header">
+    <div class="nav-title">TextCompare</div>
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="/login" [ngClass]="{ active: activeRoute === '/login' }">
+      Log In
+    </a>
+
+    <a routerLink="/signup" [ngClass]="{ active: activeRoute === '/signup' }">
+      Sign Up
+    </a>
+
+    <a target="_blank"> Log Out </a>
+  </div>
+</div>
