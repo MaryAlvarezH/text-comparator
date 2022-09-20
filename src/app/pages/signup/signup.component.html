@@ -1,0 +1,135 @@
+<div class="main-container">
+  <div class="form-container">
+    <h2 class="text-center">Sign Up</h2>
+
+    <form [formGroup]="form" (ngSubmit)="signUp()">
+      <!-- name -->
+      <div class="form-item">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Name"
+            formControlName="name"
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- lastname -->
+      <div class="form-item">
+        <mat-form-field appearance="outline">
+          <mat-label>Lastname</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Lastname"
+            formControlName="lastname"
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- email -->
+      <div class="form-item">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <small
+          class="text-danger"
+          *ngIf="form.get('email').invalid && form.get('email').touched"
+        >
+          Invalid email
+        </small>
+      </div>
+
+      <!-- password -->
+      <div class="form-item">
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            id="password-signup"
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <small
+          id="invalid-password-legend-signup"
+          class="text-danger"
+          *ngIf="form.get('password').invalid && form.get('password').touched"
+        >
+          Invalid password
+        </small>
+      </div>
+
+      <!-- validate password -->
+      <div class="form-item">
+        <mat-form-field appearance="outline">
+          <mat-label>Repeat password</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder="Password"
+            formControlName="validatePassword"
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <small
+          id="invalid-validate-password-legend-signup"
+          class="text-danger"
+          *ngIf="
+            form.get('validatePassword').invalid &&
+            form.get('validatePassword').touched
+          "
+        >
+          Invalid password
+        </small>
+        <small
+          id="password-not-mach-legend-signup"
+          class="text-danger"
+          *ngIf="
+            !form.get('password').invalid &&
+            !form.get('validatePassword').invalid &&
+            form.get('password').touched &&
+            form.get('validatePassword').touched &&
+            form.get('password').value !== form.get('validatePassword').value
+          "
+        >
+          Passwords don't match
+        </small>
+      </div>
+
+      <div class="text-center">
+        <button
+          mat-flat-button
+          color="accent"
+          type="submit"
+          class="fit-content"
+          [disabled]="
+            !form.valid ||
+            reqStatus === 1 ||
+            form.get('password').value !== form.get('validatePassword').value
+          "
+        >
+          Sign Up
+        </button>
+
+        <div class="redirection-conatiner">
+          <span>Already a user?</span>
+          <button mat-button color="accent" routerLink="/login">Log In</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
