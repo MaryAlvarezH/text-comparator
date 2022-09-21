@@ -16,6 +16,10 @@ body {
   width: 100%;
 }
 
+table.mat-table {
+  width: 100%;
+}
+
 // HELPERS
 .text-center {
   text-align: center;
@@ -23,4 +27,12 @@ body {
 
 .text-red {
   color: #f44336;
+}
+
+del {
+  background-color: #ffe6e6;
+}
+
+ins {
+  background-color: #e6ffe6;
 }
