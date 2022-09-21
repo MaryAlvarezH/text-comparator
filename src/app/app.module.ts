@@ -13,13 +13,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { UserService } from './services/user.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
+import { InterceptorService } from './services/interceptor.service';
+import { ComparisonHistoryTableComponent } from './components/comparison-history-table/comparison-history-table.component';
 
 const ANGULAR_MAT_MODULES = [
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
+  MatExpansionModule,
+  MatTableModule,
 ];
 
 @NgModule({
@@ -29,6 +38,7 @@ const ANGULAR_MAT_MODULES = [
     SignupComponent,
     TextCompareComponent,
     NavbarComponent,
+    ComparisonHistoryTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +49,15 @@ const ANGULAR_MAT_MODULES = [
     HttpClientModule,
     ...ANGULAR_MAT_MODULES,
   ],
-  providers: [LoginGuard, HttpClient],
+  providers: [
+    LoginGuard,
+    HttpClient,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
