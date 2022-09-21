@@ -1,1 +1,67 @@
-<p>login works!</p>
+<div class="main-container">
+  <div class="form-container">
+    <h2 class="text-center">Log In</h2>
+
+    <form [formGroup]="form" (ngSubmit)="logIn()" *ngIf="reqStatus !== 2">
+      <!-- email -->
+      <div class="form-item">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="form.get('email').invalid">
+            Invalid email
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- password -->
+      <div class="form-item">
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            id="password-signup"
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="form.get('password').invalid">
+            Invalid password
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="text-center">
+        <button
+          mat-flat-button
+          color="accent"
+          type="submit"
+          class="fit-content"
+          [disabled]="!form.valid || reqStatus === 1"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      <p class="text-center" *ngIf="reqStatus === 3">
+        <small class="text-red error-legend">
+          Sorry. An error occurred while logging in.
+        </small>
+      </p>
+    </form>
+
+    <div class="text-center">
+      <div class="redirection-conatiner">
+        <span>Need an account?</span>
+        <button mat-button color="accent" routerLink="/signup">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>
