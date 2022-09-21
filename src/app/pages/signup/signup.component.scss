@@ -1,8 +1,8 @@
 .main-container {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
   display: flex;
   justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 
   .form-container {
     min-width: 20rem;
@@ -11,12 +11,21 @@
       color: #ff4081;
     }
 
+    .form-item {
+      margin-bottom: 0.3rem;
+    }
+
     .redirection-conatiner {
       margin-top: 1.5rem;
 
       button {
         margin-left: 0.5rem;
       }
+    }
+
+    .error-legend {
+      display: inline-block;
+      margin-top: 1rem;
     }
   }
 }

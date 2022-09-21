@@ -11,11 +11,16 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+// ANGULAR MATERIAL
 .mat-form-field {
   width: 100%;
 }
 
-//helpers
+// HELPERS
 .text-center {
   text-align: center;
+}
+
+.text-red {
+  color: #f44336;
 }

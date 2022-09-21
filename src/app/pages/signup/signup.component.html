@@ -2,7 +2,7 @@
   <div class="form-container">
     <h2 class="text-center">Sign Up</h2>
 
-    <form [formGroup]="form" (ngSubmit)="signUp()">
+    <form [formGroup]="form" (ngSubmit)="signUp()" *ngIf="reqStatus !== 2">
       <!-- name -->
       <div class="form-item">
         <mat-form-field appearance="outline">
@@ -42,13 +42,10 @@
             formControlName="email"
             autocomplete="off"
           />
+          <mat-error *ngIf="form.get('email').invalid">
+            Invalid email
+          </mat-error>
         </mat-form-field>
-        <small
-          class="text-danger"
-          *ngIf="form.get('email').invalid && form.get('email').touched"
-        >
-          Invalid email
-        </small>
       </div>
 
       <!-- password -->
@@ -63,14 +60,10 @@
             formControlName="password"
             autocomplete="off"
           />
+          <mat-error *ngIf="form.get('password').invalid">
+            Invalid password
+          </mat-error>
         </mat-form-field>
-        <small
-          id="invalid-password-legend-signup"
-          class="text-danger"
-          *ngIf="form.get('password').invalid && form.get('password').touched"
-        >
-          Invalid password
-        </small>
       </div>
 
       <!-- validate password -->
@@ -84,17 +77,10 @@
             formControlName="validatePassword"
             autocomplete="off"
           />
+          <mat-error *ngIf="form.get('validatePassword').invalid">
+            Invalid password
+          </mat-error>
         </mat-form-field>
-        <small
-          id="invalid-validate-password-legend-signup"
-          class="text-danger"
-          *ngIf="
-            form.get('validatePassword').invalid &&
-            form.get('validatePassword').touched
-          "
-        >
-          Invalid password
-        </small>
         <small
           id="password-not-mach-legend-signup"
           class="text-danger"
@@ -124,12 +110,23 @@
         >
           Sign Up
         </button>
-
-        <div class="redirection-conatiner">
-          <span>Already a user?</span>
-          <button mat-button color="accent" routerLink="/login">Log In</button>
-        </div>
       </div>
+
+      <p class="text-center" *ngIf="reqStatus === 3">
+        <small class="text-red error-legend">
+          Sorry. An error occurred while registering.
+        </small>
+      </p>
     </form>
+
+    <div class="text-center">
+      <div class="redirection-conatiner">
+        <span *ngIf="reqStatus !== 2">Already a user?</span>
+        <span *ngIf="reqStatus === 2">
+          Your are a user now, log In to continue.
+        </span>
+        <button mat-button color="accent" routerLink="/login">Log In</button>
+      </div>
+    </div>
   </div>
 </div>

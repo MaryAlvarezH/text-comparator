@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { UserService } from './services/user.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 const ANGULAR_MAT_MODULES = [
   MatFormFieldModule,
@@ -34,9 +36,10 @@ const ANGULAR_MAT_MODULES = [
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     ...ANGULAR_MAT_MODULES,
   ],
-  providers: [LoginGuard],
+  providers: [LoginGuard, HttpClient],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

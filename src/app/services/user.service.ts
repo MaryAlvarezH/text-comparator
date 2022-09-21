@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { User } from '../models/user';
+import { Observable, Subject, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Credentials, User } from '../models/user';
+import { isEmpty } from 'lodash';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -30,25 +34,68 @@ export class UserService {
     return !!JSON.parse(window.localStorage.getItem('auth_token'));
   }
 
-  constructor() {
-    this.baseUrl = 'http://localhost:8080/api/v1/';
+  constructor(private http: HttpClient, private router: Router) {
+    this.baseUrl = 'http://localhost:8080/api/v1';
 
     this._loggedIn = !!JSON.parse(window.localStorage.getItem('auth_token'));
 
-    this.user.id = !!window.localStorage.getItem('user_id')
-      ? JSON.parse(window.localStorage.getItem('user_id'))
-      : null;
-
-    this.user.name = !!window.localStorage.getItem('user_name')
-      ? JSON.parse(window.localStorage.getItem('user_name'))
-      : null;
-
-    this.user.lastname = !!window.localStorage.getItem('user_lastname')
-      ? JSON.parse(window.localStorage.getItem('user_lastname'))
+    this.user.email = !!window.localStorage.getItem('user_email')
+      ? JSON.parse(window.localStorage.getItem('user_email'))
       : null;
   }
 
   isLoggedIn(): boolean {
     return this.loggedIn;
+  }
+
+  signUp(newUser: User): Observable<object> {
+    if (isEmpty(newUser)) {
+      return throwError(() => '[user.service]: not user provided');
+    }
+    return this.http.post(`${this.baseUrl}/users`, newUser);
+  }
+
+  logIn(credentials: Credentials): Observable<object> {
+    if (!credentials.email) {
+      return throwError(() => '[user.service]: not email provided');
+    }
+    if (!credentials.password) {
+      return throwError(() => '[user.service]: not password provided');
+    }
+
+    // Delete last session info if token expired and user doesn't logout.
+    if (
+      JSON.parse(window.localStorage.getItem('user_email')) !==
+      credentials.email
+    ) {
+      window.localStorage.clear();
+    }
+
+    return this.http
+      .post(`${this.baseUrl}/authenticate`, { ...credentials })
+      .pipe(
+        tap((token) => {
+          if (!!token) {
+            this.user.email = credentials.email;
+            window.localStorage.setItem(
+              'user_email',
+              JSON.stringify(this.user.email)
+            );
+            window.localStorage.setItem('auth_token', JSON.stringify(token));
+
+            this._loggedIn = true;
+          }
+        })
+      );
+  }
+
+  logout(redirectToLogin: boolean = true): void {
+    this._loggedIn = false;
+    this.user = new User();
+
+    if (redirectToLogin) {
+      this.router.navigate(['/login']);
+    }
+    window.localStorage.clear();
   }
 }
