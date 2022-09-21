@@ -1,1 +1,92 @@
-<p>text-compare works!</p>
+<div class="main-container">
+  <div class="form-container">
+    <h1 class="text-center">Text Compare</h1>
+
+    <form [formGroup]="form" (ngSubmit)="compareTexts()">
+      <div class="form-items-container">
+        <!-- text1 -->
+        <div class="form-item">
+          <mat-form-field appearance="outline">
+            <mat-label>Text 1</mat-label>
+            <textarea
+              matInput
+              type="text"
+              placeholder="Lorem ipsum dolor"
+              formControlName="text1"
+              autocomplete="off"
+            ></textarea>
+            <mat-error *ngIf="form.get('text1').invalid">
+              Invalid text
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- text2 -->
+        <div class="form-item">
+          <mat-form-field appearance="outline">
+            <mat-label>Text 2</mat-label>
+            <textarea
+              matInput
+              type="text"
+              placeholder="Lorem ipsum dolor sit amet."
+              formControlName="text2"
+              autocomplete="off"
+            ></textarea>
+            <mat-error *ngIf="form.get('text2').invalid">
+              Invalid text
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button
+          mat-flat-button
+          color="accent"
+          type="submit"
+          class="fit-content"
+          [disabled]="!form.valid || compareReqStatus === 1"
+        >
+          Compare Texts
+        </button>
+      </div>
+
+      <p class="text-center" *ngIf="compareReqStatus === 3">
+        <small class="text-red error-legend">
+          Sorry. An error occurred while comparing texts.
+        </small>
+      </p>
+    </form>
+
+    <div
+      class="comparison-result-container text-center"
+      *ngIf="!!comparisonResult"
+    >
+      <h1 class="text-center">Comparison results</h1>
+      <p [innerHTML]="comparisonResult"></p>
+    </div>
+
+    <div class="history-container">
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Comparison History</mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <app-comparison-history-table
+            *ngIf="historyReqStatus == 2 && historyResult?.length > 0"
+            [dataSource]="historyResult"
+          ></app-comparison-history-table>
+
+          <small *ngIf="historyReqStatus === 2 && historyResult?.length === 0">
+            No comparisons registered yet
+          </small>
+
+          <small *ngIf="historyReqStatus === 3" class="text-red">
+            An error occurred when consulting the comparison history
+          </small>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

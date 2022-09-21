@@ -1,0 +1,42 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+
+  .form-container {
+    width: 80%;
+
+    .form-items-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    h1,
+    h2 {
+      color: #ff4081;
+    }
+
+    .form-item {
+      margin-bottom: 0.3rem;
+      width: 100%;
+    }
+
+    .error-legend {
+      display: inline-block;
+      margin-top: 1rem;
+    }
+  }
+
+  .comparison-result-container {
+    font-size: 1rem;
+    margin: 2rem;
+  }
+
+  .history-container {
+    margin-top: 2rem;
+  }
+}
