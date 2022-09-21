@@ -74,14 +74,17 @@ export class UserService {
     return this.http
       .post(`${this.baseUrl}/authenticate`, { ...credentials })
       .pipe(
-        tap((token) => {
-          if (!!token) {
+        tap((resp: any) => {
+          if (!!resp) {
             this.user.email = credentials.email;
             window.localStorage.setItem(
               'user_email',
               JSON.stringify(this.user.email)
             );
-            window.localStorage.setItem('auth_token', JSON.stringify(token));
+            window.localStorage.setItem(
+              'auth_token',
+              JSON.stringify(resp.token)
+            );
 
             this._loggedIn = true;
           }
