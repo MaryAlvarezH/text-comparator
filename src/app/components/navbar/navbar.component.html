@@ -4,14 +4,19 @@
   </div>
 
   <div class="nav-links">
-    <a routerLink="/login" [ngClass]="{ active: activeRoute === '/login' }">
-      Log In
-    </a>
+    <ng-container *ngIf="!user.email">
+      <a routerLink="/login" [ngClass]="{ active: activeRoute === '/login' }">
+        Log In
+      </a>
 
-    <a routerLink="/signup" [ngClass]="{ active: activeRoute === '/signup' }">
-      Sign Up
-    </a>
+      <a routerLink="/signup" [ngClass]="{ active: activeRoute === '/signup' }">
+        Sign Up
+      </a>
+    </ng-container>
 
-    <a target="_blank"> Log Out </a>
+    <ng-container *ngIf="!!user.email">
+      <span class="logged-email">{{ user.email }}</span>
+      <a (click)="logout()"> Log Out </a>
+    </ng-container>
   </div>
 </div>
