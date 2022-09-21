@@ -15,6 +15,7 @@ export class ComparisonHistoryTableComponent implements OnInit {
     'secondText',
     'vowelsFisrtText',
     'vowelsSecondText',
+    'transformationDistance'
   ];
 
   constructor() {}

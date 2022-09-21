@@ -6,4 +6,10 @@ export class SavedComparison {
   secondText: string;
   vowelsFisrtText: string;
   vowelsSecondText: string;
+  transformationDistance: number;
+}
+
+export class ComparisonResult {
+  htmlDiff: string;
+  transformationDistance: number;
 }

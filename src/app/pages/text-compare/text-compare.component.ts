@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SavedComparison } from 'src/app/models/comparison';
+import { ComparisonResult, SavedComparison } from 'src/app/models/comparison';
 import { ComparisonService } from 'src/app/services/comparison.service';
 import { ReqStatus } from 'src/app/tools/types/global';
 
@@ -11,7 +11,7 @@ import { ReqStatus } from 'src/app/tools/types/global';
 })
 export class TextCompareComponent implements OnInit {
   form: FormGroup;
-  comparisonResult;
+  comparisonResult: ComparisonResult;
   historyResult: SavedComparison[];
   compareReqStatus: ReqStatus = ReqStatus.initial;
   historyReqStatus: ReqStatus = ReqStatus.initial;
@@ -35,7 +35,7 @@ export class TextCompareComponent implements OnInit {
     this.comparisonService
       .compareTexts(this.form.value.text1, this.form.value.text2)
       .subscribe(
-        (resp) => {
+        (resp: ComparisonResult) => {
           this.comparisonResult = resp;
           this.compareReqStatus = 2;
           this.getComparisonHistory();

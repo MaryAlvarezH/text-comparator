@@ -63,7 +63,11 @@
       *ngIf="!!comparisonResult"
     >
       <h1 class="text-center">Comparison results</h1>
-      <p [innerHTML]="comparisonResult"></p>
+      <p [innerHTML]="comparisonResult.htmlDiff"></p>
+
+
+      <h3 class="text-center">Min. Transformation distance:</h3>
+      <span>{{comparisonResult.transformationDistance}}</span>
     </div>
 
     <div class="history-container">
